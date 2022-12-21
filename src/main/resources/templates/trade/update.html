@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>Update Trade</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+
+<header>
+	<div class="row" style="height: 24rem"></div>
+</header>
+
+<body>
+<div class="container">
+
+	<h1 class="col-8 offset-md-3">Add New Trade</h1>
+
+	<div class="row mt-5 justify-content-center">
+		<div class="col-8">
+			<form action="#" th:action="@{/trade/update/{id}(id=${trade.id})}" th:object="${trade}" method="post" class="form-horizontal" style="width: 100%">
+				<div class="form-group offset-md-3">
+					<label for="account" class="control-label">Account</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{account}" id="account" placeholder="Account">
+						<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="type" class="control-label">Type</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{type}" id="type" placeholder="Type">
+						<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="buyQuantity" class="control-label">Buy quantity</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{buyQuantity}" id="buyQuantity" placeholder="Buy quantity">
+						<p class="text-danger" th:if="${#fields.hasErrors('buyQuantity')}" th:errors="*{buyQuantity}"></p>
+					</div>
+				</div>
+
+
+				<div class="form-group offset-md-3">
+					<div class="col pt-3 pl-0">
+						<a class="btn btn-danger btn-sm" href="/trade/list">Cancel</a>
+						<input class="btn btn-primary btn-sm" type="submit" value="Update Trade">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+
+<footer>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+
+</html>

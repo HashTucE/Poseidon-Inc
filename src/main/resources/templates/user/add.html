@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>Add User</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<header>
+	<div class="row" style="height: 24rem"></div>
+</header>
+
+<body>
+
+<div class="container">
+
+	<h1 class="col-8 offset-md-3">Add New User</h1>
+
+
+	<div class="row mt-5 justify-content-center">
+		<div class="col-8">
+			<form action="#" th:action="@{/user/validate}" th:object="${user}" method="post" class="form-horizontal" style="width: 100%">
+				<div class="form-group offset-md-3">
+					<label for="fullname" class="control-label">Full Name</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{fullname}" id="fullname" placeholder="Full Name">
+						<p class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="username" class="control-label">User Name</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{username}" id="username" placeholder="User Name">
+						<p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="password" class="control-label">Password</label>
+					<div>
+						<input class="col-8" type="password" th:field="*{password}" id="password" placeholder="Password">
+						<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="password" class="control-label">Role</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="ADMIN">&nbsp;Admin&nbsp;&nbsp;&nbsp;</label>
+						<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="USER">&nbsp;User&nbsp;</label>
+						<p class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+					</div>
+				</div>
+
+
+				<div class="form-group offset-md-3">
+					<div class="col-sm-12">
+						<a class="btn btn-danger btn-sm" href="/user/list">Cancel</a>
+						<input class="btn btn-primary btn-sm" type="submit" value="Add user">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+</body>
+
+<footer>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+
+</html>

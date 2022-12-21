@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Add Rating</title>
+<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+
+<header>
+	<div class="row" style="height: 24rem"></div>
+</header>
+
+<body>
+<div class="container">
+
+	<h1 class="col-8 offset-md-3">Add New Rating</h1>
+
+	<div class="row mt-5 justify-content-center">
+		<div class="col-8">
+			<form action="#" th:action="@{/rating/validate}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
+				<div class="form-group offset-md-3">
+					<label for="moodysRating" class="control-label">MoodysRating</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{moodysRating}" id="moodysRating" placeholder="MoodysRating">
+						<p class="text-danger" th:if="${#fields.hasErrors('moodysRating')}" th:errors="*{moodysRating}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="sandPRating" class="control-label">SandPRating</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{sandPRating}" id="sandPRating" placeholder="SandPRating">
+						<p class="text-danger" th:if="${#fields.hasErrors('sandPRating')}" th:errors="*{sandPRating}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="fitchRating" class="control-label">FitchRating</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{fitchRating}" id="fitchRating" placeholder="Fitch Rating">
+						<p class="text-danger" th:if="${#fields.hasErrors('fitchRating')}" th:errors="*{fitchRating}"></p>
+					</div>
+				</div>
+				<div class="form-group offset-md-3">
+					<label for="order" class="control-label">Order</label>
+					<div>
+						<input class="col-8" type="text" th:field="*{orderNumber}" id="order" placeholder="Order">
+						<p class="text-danger" th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}"></p>
+					</div>
+				</div>
+
+
+				<div class="form-group offset-md-3">
+					<div class="col pt-3 pl-0">
+						<a class="btn btn-danger btn-sm" href="/rating/list">Cancel</a>
+						<input class="btn btn-primary btn-sm" type="submit" value="Add Rating">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+
+<footer>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+
+</html>

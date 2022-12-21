@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Curve Point List</title>
+<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+
+<header>
+	<div class="row" style="height: 24rem"></div>
+</header>
+
+<body>
+	<div class="container">
+
+		<div th:replace="~{fragments/menu :: div}"></div>
+
+		<div class="row"><h2>Curve Point List</h2></div>
+		<div class="row">
+			<a href="/curvePoint/add" class="btn btn-primary btn-sm">Add New</a>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>CurvePointId</th>
+						<th>Term</th>
+						<th>Value</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="curve : ${curveList}">
+						<td style="width: 10%" th:text="${curve.id}"></td>
+						<td th:text="${curve.curveId}"></td>
+						<td th:text="${curve.term}"></td>
+						<td style="width: 25%" th:text="${curve.value}"></td>
+						<td style="width: 15%" class="text-center">
+							<a th:href="@{/curvePoint/update/{id}(id=${curve.id})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/curvePoint/delete/{id}(id=${curve.id})}">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="mx-auto">
+				<div th:if="${alertMessage}" class="text" role="alert">
+					<p th:text="${alertMessage}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<footer>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+
+</html>

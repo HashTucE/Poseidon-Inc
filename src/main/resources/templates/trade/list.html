@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Trade List</title>
+<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+
+<header>
+	<div class="row" style="height: 24rem"></div>
+</header>
+
+<body>
+	<div class="container">
+
+		<div th:replace="~{fragments/menu :: div}"></div>
+
+		<div class="row"><h2>Trade List</h2></div>
+		<div class="row">
+			<a href="/trade/add" class="btn btn-primary btn-sm">Add New</a>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Account</th>
+						<th>Type</th>
+						<th>Buy Quantity</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="trade : ${tradeList}">
+						<td style="width: 10%" th:text="${trade.id}"></td>
+						<td th:text="${trade.account}"></td>
+						<td th:text="${trade.type}"></td>
+						<td style="width: 25%" th:text="${trade.buyQuantity}"></td>
+						<td style="width: 15%" class="text-center">
+							<a th:href="@{/trade/update/{id}(id=${trade.id})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/trade/delete/{id}(id=${trade.id})}">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="mx-auto">
+				<div th:if="${alertMessage}" class="text" role="alert">
+					<p th:text="${alertMessage}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<footer>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+
+</html>

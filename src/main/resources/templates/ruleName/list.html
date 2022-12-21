@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Rule List</title>
+<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+</head>
+
+<header>
+	<div class="row" style="height: 24rem"></div>
+</header>
+
+<body>
+	<div class="container">
+
+		<div th:replace="~{fragments/menu :: div}"></div>
+
+		<div class="row"><h2>Rule List</h2></div>
+		<div class="row">
+			<a href="/ruleName/add" class="btn btn-primary btn-sm">Add New</a>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Json</th>
+						<th>Template</th>
+						<th>Sql</th>
+						<th>SqlPart</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="rule : ${ruleList}">
+						<td style="width: 10%" th:text="${rule.id}"></td>
+						<td th:text="${rule.name}"></td>
+						<td th:text="${rule.description}"></td>
+						<td th:text="${rule.json}"></td>
+						<td th:text="${rule.template}"></td>
+						<td th:text="${rule.sqlStr}"></td>
+						<td th:text="${rule.sqlPart}"></td>
+						<td style="width: 15%" class="text-center">
+							<a th:href="@{/ruleName/update/{id}(id=${rule.id})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/ruleName/delete/{id}(id=${rule.id})}">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="mx-auto">
+				<div th:if="${alertMessage}" class="text" role="alert">
+					<p th:text="${alertMessage}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<footer>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <title>Menu</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+
+    <div class="d-flex justify-content-between pt-10 mb-3">
+
+        <div>
+                <span sec:authorize="hasAuthority('ADMIN')">
+                    <a href="/user/list">User List</a>&nbsp;|&nbsp;</span>
+            <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+            <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+            <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+            <a href="/trade/list">Trades</a>&nbsp;|&nbsp;
+            <a href="/ruleName/list">Rules</a>
+        </div>
+
+        <div class="mb-3 text-right">Logged in user:
+            <strong sec:authentication="name"></strong>
+            <form th:action="@{/logout}" method=post>
+                <button type="submit" class="btn btn-light border-secondary">Logout</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

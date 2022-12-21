@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+
+<header>
+    <div class="row" style="height: 24rem"></div>
+</header>
+<body>
+<div class="container">
+
+    <h1 class="text-center">Login with Username and Password</h1>
+        <div th:if="${param.error}">Invalid username and password.</div>
+    <div class="row mt-5 justify-content-center">
+        <div class="col-8">
+            <form th:action="@{/login/process}" method="post">
+                <div class="form-group row justify-content-center">
+                    <label for="username" class="col-sm-2 col-form-label">User:</label>
+                    <div class="col-sm-6 pl-0">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="User"/>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center mb-4">
+                    <label for="password" class="col-sm-2 col-form-label">Password:</label>
+                    <div class="col-sm-6 pl-0">
+                        <input type="password" id="password" name="password" class="form-control border" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="row offset-md-2">
+                    <input type="submit" value="&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;" />
+                    <div class="mx-3">or</div>
+                    <a th:href="@{/oauth2/authorization/github}">Login with GitHub</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<footer class="fixed-bottom pb-3 pr-3" th:fragment="footer">
+    <a class="float-right"><img th:src="@{/img/logo.png}" width=200px height=auto></a>
+</footer>
+</html>
