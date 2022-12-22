@@ -39,7 +39,7 @@ Can be use with a browser or via software like Postman
 
   - Use this [script](https://github.com/HashTucE/Poseidon-Inc/blob/develop/src/main/resources/doc/schema.sql) to create the datatbase.
 
-  - Use this [script]([https://github.com/HashTucE/Poseidon-Inc/src/main/resources/doc/data.sql) to create an admin and a user.
+  - Use this [script](https://github.com/HashTucE/Poseidon-Inc/src/main/resources/doc/data.sql) to create an admin and a user.
 
 - Additional informations :
   - Then to sign in with any of these 2 first account, use the password `&&`.
