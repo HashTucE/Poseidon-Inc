@@ -100,10 +100,7 @@ public class BidListRestControllerTest {
     public void addBidNegativeTest() {
 
         //given
-        BidList bid = new BidList();
-        bid.setAccount("");
-        bid.setType("type");
-        bid.setBidQuantity(1.0);
+        BidList bid = new BidList("", "type", 1.0);
 
         //when
         ResponseEntity<String> response = bidListRestController.addBid(bid);
@@ -117,10 +114,7 @@ public class BidListRestControllerTest {
     public void addBidNegativeTest2() {
 
         //given
-        BidList bid = new BidList();
-        bid.setAccount("account");
-        bid.setType("");
-        bid.setBidQuantity(1.0);
+        BidList bid = new BidList("account", "", 1.0);
 
         //when
         ResponseEntity<String> response = bidListRestController.addBid(bid);
@@ -134,10 +128,7 @@ public class BidListRestControllerTest {
     public void addBidNegativeTest3() {
 
         //given
-        BidList bid = new BidList();
-        bid.setAccount("account");
-        bid.setType("type");
-        bid.setBidQuantity(null);
+        BidList bid = new BidList("account", "type", null);
 
         //when
         ResponseEntity<String> response = bidListRestController.addBid(bid);
@@ -151,10 +142,7 @@ public class BidListRestControllerTest {
     public void addBidTest() {
 
         //given
-        BidList bid = new BidList();
-        bid.setAccount("account");
-        bid.setType("type");
-        bid.setBidQuantity(1.0);
+        BidList bid = new BidList("account", "type", 1.0);
 
         //when
         ResponseEntity<String> response = bidListRestController.addBid(bid);
@@ -195,6 +183,54 @@ public class BidListRestControllerTest {
         //then
         verify(bidListService, never()).updateBid(1, bid);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+
+    @Test
+    public void updateBidNegativeTest2() throws NotExistingException {
+
+        //given
+        BidList bid = new BidList("", "type", 1.0);
+        when(bidListService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = bidListRestController.updateBid(1, bid);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Account is mandatory", response.getBody());
+    }
+
+    @Test
+    public void updateBidNegativeTest3() throws NotExistingException {
+
+        //given
+        BidList bid = new BidList("account", "", 1.0);
+        when(bidListService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = bidListRestController.updateBid(1, bid);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Type is mandatory", response.getBody());
+    }
+
+    @Test
+    public void updateBidNegativeTest4() throws NotExistingException {
+
+        //given
+        BidList bid = new BidList("account", "type", null);
+        when(bidListService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = bidListRestController.updateBid(1, bid);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Bid Quantity is mandatory", response.getBody());
     }
 
 

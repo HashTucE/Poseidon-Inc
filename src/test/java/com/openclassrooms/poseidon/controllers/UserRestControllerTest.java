@@ -99,11 +99,8 @@ public class UserRestControllerTest {
     public void AddUserNegativeTest() {
 
         //given
-        User user = new User();
-        user.setFullname("");
-        user.setUsername("username");
-        user.setPassword("Passw0rd!");
-        user.setRole("USER");
+        User user = new User(1, "user", "Passw0rd&", "", "USER");
+
 
         //when
         ResponseEntity<String> response = userRestController.addUser(user);
@@ -117,11 +114,7 @@ public class UserRestControllerTest {
     public void AddUserNegativeTest2() {
 
         //given
-        User user = new User();
-        user.setFullname("fullname");
-        user.setUsername("");
-        user.setPassword("Passw0rd!");
-        user.setRole("USER");
+        User user = new User(1, "", "Passw0rd&", "fullname", "USER");
 
         //when
         ResponseEntity<String> response = userRestController.addUser(user);
@@ -135,11 +128,7 @@ public class UserRestControllerTest {
     public void AddUserNegativeTest3() {
 
         //given
-        User user = new User();
-        user.setFullname("fullname");
-        user.setUsername("username");
-        user.setPassword("password");
-        user.setRole("USER");
+        User user = new User(1, "user", "password", "fullname", "USER");
 
         //when
         ResponseEntity<String> response = userRestController.addUser(user);
@@ -153,11 +142,7 @@ public class UserRestControllerTest {
     public void AddUserNegativeTest4() {
 
         //given
-        User user = new User();
-        user.setFullname("fullname");
-        user.setUsername("username");
-        user.setPassword("Passw0rd@");
-        user.setRole("");
+        User user = new User(1, "user", "Passw0rd@", "fullname", "");
 
         //when
         ResponseEntity<String> response = userRestController.addUser(user);
@@ -171,11 +156,7 @@ public class UserRestControllerTest {
     public void AddUserTest() {
 
         //given
-        User user = new User();
-        user.setFullname("fullname");
-        user.setUsername("username");
-        user.setPassword("Passw0rd@");
-        user.setRole("USER");
+        User user = new User(1, "user", "Passw0rd@", "fullname", "USER");
 
         //when
         ResponseEntity<String> response = userRestController.addUser(user);
@@ -190,7 +171,7 @@ public class UserRestControllerTest {
     public void updateUserTest() throws NotExistingException {
 
         //given
-        User user = new User(1,"user", "pass", "name", "USER");
+        User user = new User(1,"user", "Passw0rd&", "name", "USER");
         when(userService.existsById(1)).thenReturn(true);
 
         //when
@@ -215,6 +196,70 @@ public class UserRestControllerTest {
         //then
         verify(userService, never()).updateUser(1, user);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+
+    @Test
+    public void updateUserNegativeTest2() throws NotExistingException {
+
+        //given
+        User user = new User(1, "user", "Passw0rd@", "", "USER");
+        when(userService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = userRestController.updateUser(1, user);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Fullname is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateUserNegativeTest3() throws NotExistingException {
+
+        //given
+        User user = new User(1, "", "Passw0rd@", "fullname", "USER");
+        when(userService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = userRestController.updateUser(1, user);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Username is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateUserNegativeTest4() throws NotExistingException {
+
+        //given
+        User user = new User(1, "user", "Pass", "fullname", "USER");
+        when(userService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = userRestController.updateUser(1, user);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Password must contain at least 8 characters, a capital letter, a digit and a symbol", response.getBody());
+    }
+
+
+    @Test
+    public void updateUserNegativeTest5() throws NotExistingException {
+
+        //given
+        User user = new User(1, "user", "Passw0rd@", "fullname", "");
+        when(userService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = userRestController.updateUser(1, user);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Role 'USER' or 'ADMIN' is mandatory", response.getBody());
     }
 
 

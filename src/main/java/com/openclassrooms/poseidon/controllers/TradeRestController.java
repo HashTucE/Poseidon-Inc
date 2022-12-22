@@ -106,9 +106,20 @@ public class TradeRestController {
     public ResponseEntity<String> updateTrade(@RequestParam int id, @RequestBody Trade trade) throws NotExistingException {
 
         if(tradeService.existsById(id)) {
-        tradeService.updateTrade(id, trade);
-        log.info(Log.OBJECT_MODIFIED);
-        return ResponseEntity.ok().body("Trade with id " + id + " updated !");
+
+            if (trade.getAccount().isBlank()) {
+                return new ResponseEntity<>("Account is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (trade.getType().isBlank()) {
+                return new ResponseEntity<>("Type is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (trade.getBuyQuantity() == null) {
+                return new ResponseEntity<>("BuyQuantity is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            tradeService.updateTrade(id, trade);
+            log.info(Log.OBJECT_MODIFIED);
+            return ResponseEntity.ok().body("Trade with id " + id + " updated !");
+
         } else {
             log.info(Log.OBJECT_NOT_FOUND);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

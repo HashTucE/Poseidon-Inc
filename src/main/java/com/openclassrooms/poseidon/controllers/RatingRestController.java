@@ -109,9 +109,23 @@ public class RatingRestController {
     public ResponseEntity<String> updateRating(@RequestParam int id, @RequestBody Rating rating) throws NotExistingException {
 
         if(ratingService.existsById(id)) {
+
+            if (rating.getMoodysRating().isBlank()) {
+                return new ResponseEntity<>("MoodysRating is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rating.getSandPRating().isBlank()) {
+                return new ResponseEntity<>("SandPRating is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rating.getFitchRating().isBlank()) {
+                return new ResponseEntity<>("FitchRating is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rating.getOrderNumber() == null) {
+                return new ResponseEntity<>("Order is mandatory", HttpStatus.BAD_REQUEST);
+            }
             ratingService.updateRating(id, rating);
             log.info(Log.OBJECT_MODIFIED);
             return ResponseEntity.ok().body("Rating with id " + id + " updated !");
+
         } else {
             log.info(Log.OBJECT_NOT_FOUND);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

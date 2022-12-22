@@ -115,9 +115,29 @@ public class RuleNameRestController {
     public ResponseEntity<String> updateRule(@RequestParam int id, @RequestBody RuleName rule) throws NotExistingException {
 
         if(ruleNameService.existsById(id)) {
+
+            if (rule.getName().isBlank()) {
+                return new ResponseEntity<>("Name is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rule.getDescription().isBlank()) {
+                return new ResponseEntity<>("Description is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rule.getJson().isBlank()) {
+                return new ResponseEntity<>("Json is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rule.getTemplate().isBlank()) {
+                return new ResponseEntity<>("Template is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rule.getSqlStr().isBlank()) {
+                return new ResponseEntity<>("Sql is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (rule.getSqlPart().isBlank()) {
+                return new ResponseEntity<>("SqlPart is mandatory", HttpStatus.BAD_REQUEST);
+            }
             ruleNameService.updateRuleName(id, rule);
             log.info(Log.OBJECT_MODIFIED);
             return ResponseEntity.ok().body("Rule with id " + id + " updated !");
+
         } else {
             log.info(Log.OBJECT_NOT_FOUND);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

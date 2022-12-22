@@ -203,6 +203,73 @@ public class RatingRestControllerTest {
 
 
     @Test
+    public void updateRatingNegativeTest2() throws NotExistingException {
+
+        //given
+        Rating rating = new Rating("", "a", "a", 1);
+        when(ratingService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = ratingRestController.updateRating(1, rating);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("MoodysRating is mandatory", response.getBody());
+    }
+
+    @Test
+    public void updateRatingNegativeTest3() throws NotExistingException {
+
+        //given
+        Rating rating = new Rating("a", "", "a", 1);
+        when(ratingService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = ratingRestController.updateRating(1, rating);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("SandPRating is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRatingNegativeTest4() throws NotExistingException {
+
+        //given
+        Rating rating = new Rating("a", "a", "", 1);
+        when(ratingService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = ratingRestController.updateRating(1, rating);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("FitchRating is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRatingNegativeTest5() throws NotExistingException {
+
+        //given
+        Rating rating = new Rating("a", "a", "a", null);
+        when(ratingService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = ratingRestController.updateRating(1, rating);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Order is mandatory", response.getBody());
+    }
+
+
+    @Test
     public void deleteRatingTest() throws NotExistingException {
 
         // given

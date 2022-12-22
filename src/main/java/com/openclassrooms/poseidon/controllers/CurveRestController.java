@@ -106,9 +106,20 @@ public class CurveRestController {
     public ResponseEntity<String> updateCurve(@RequestParam int id, @RequestBody CurvePoint curve) throws NotExistingException {
 
         if(curveService.existsById(id)) {
+
+            if (curve.getCurveId() == null) {
+                return new ResponseEntity<>("CurvePointId is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (curve.getTerm() == null) {
+                return new ResponseEntity<>("Term is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (curve.getValue() == null) {
+                return new ResponseEntity<>("Value is mandatory", HttpStatus.BAD_REQUEST);
+            }
             curveService.updateCurvePoint(id, curve);
             log.info(Log.OBJECT_MODIFIED);
             return ResponseEntity.ok().body("Curve with id " + id + " updated !");
+
         } else {
             log.info(Log.OBJECT_NOT_FOUND);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

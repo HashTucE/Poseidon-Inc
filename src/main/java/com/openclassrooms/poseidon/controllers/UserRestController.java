@@ -116,10 +116,28 @@ public class UserRestController {
     @PutMapping("/user")
     public ResponseEntity<String> updateUser(@RequestParam int id, @RequestBody User user) throws NotExistingException {
 
+        Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+        Matcher matcher = pattern.matcher(user.getPassword());
+
         if(userService.existsById(id)) {
+
+            if (user.getFullname().isBlank()) {
+                return new ResponseEntity<>("Fullname is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (user.getUsername().isBlank()) {
+                return new ResponseEntity<>("Username is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (!matcher.matches()) {
+                log.error("Invalid password");
+                return new ResponseEntity<>("Password must contain at least 8 characters, a capital letter, a digit and a symbol", HttpStatus.BAD_REQUEST);
+            }
+            if (user.getRole().isBlank()) {
+                return new ResponseEntity<>("Role 'USER' or 'ADMIN' is mandatory", HttpStatus.BAD_REQUEST);
+            }
             userService.updateUser(id, user);
             log.info(Log.OBJECT_MODIFIED);
             return ResponseEntity.ok().body("User with id " + id + " updated !");
+
         } else {
             log.info(Log.OBJECT_NOT_FOUND);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

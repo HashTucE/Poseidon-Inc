@@ -106,9 +106,20 @@ public class BidListRestController {
     public ResponseEntity<String> updateBid(@RequestParam int id, @RequestBody BidList bid) throws NotExistingException {
 
         if(bidListService.existsById(id)) {
+
+            if (bid.getAccount().isBlank()) {
+                return new ResponseEntity<>("Account is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (bid.getType().isBlank()) {
+                return new ResponseEntity<>("Type is mandatory", HttpStatus.BAD_REQUEST);
+            }
+            if (bid.getBidQuantity() == null) {
+                return new ResponseEntity<>("Bid Quantity is mandatory", HttpStatus.BAD_REQUEST);
+            }
             bidListService.updateBid(id, bid);
             log.info(Log.OBJECT_MODIFIED);
             return ResponseEntity.ok().body("Bid with id " + id + " updated !");
+
         } else {
             log.info(Log.OBJECT_NOT_FOUND);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

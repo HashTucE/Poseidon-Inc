@@ -234,6 +234,102 @@ public class RuleNameRestControllerTest {
 
 
     @Test
+    public void updateRuleNegativeTest2() throws NotExistingException {
+
+        //given
+        RuleName rule = new RuleName("", "a", "a", "a", "a", "a");
+        when(ruleNameService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = ruleNameRestController.updateRule(1, rule);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Name is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRuleNegativeTest3() throws NotExistingException {
+
+        //given
+        RuleName rule = new RuleName("a", "", "a", "a", "a", "a");
+        when(ruleNameService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = ruleNameRestController.updateRule(1, rule);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Description is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRuleNegativeTest4() throws NotExistingException {
+
+        //given
+        RuleName rule = new RuleName("a", "a", "", "a", "a", "a");
+        when(ruleNameService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = ruleNameRestController.updateRule(1, rule);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Json is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRuleNegativeTest5() throws NotExistingException {
+
+        //given
+        RuleName rule = new RuleName("a", "a", "a", "", "a", "a");
+        when(ruleNameService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = ruleNameRestController.updateRule(1, rule);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Template is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRuleNegativeTest6() throws NotExistingException {
+
+        //given
+        RuleName rule = new RuleName("a", "a", "a", "a", "", "a");
+        when(ruleNameService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = ruleNameRestController.updateRule(1, rule);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Sql is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateRuleNegativeTest7() throws NotExistingException {
+
+        //given
+        RuleName rule = new RuleName("a", "a", "a", "a", "a", "");
+        when(ruleNameService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = ruleNameRestController.updateRule(1, rule);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("SqlPart is mandatory", response.getBody());
+    }
+
+
+    @Test
     public void deleteRuleTest() throws NotExistingException {
 
         // given

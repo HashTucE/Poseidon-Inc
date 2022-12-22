@@ -1,6 +1,8 @@
 package com.openclassrooms.poseidon.integration;
 
 import com.openclassrooms.poseidon.domain.Trade;
+import com.openclassrooms.poseidon.exceptions.EmptyListException;
+import com.openclassrooms.poseidon.repositories.TradeRepository;
 import com.openclassrooms.poseidon.services.TradeService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -11,8 +13,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,8 +41,32 @@ public class TradeIT {
     @Autowired
     private TradeService tradeService;
 
+    @Autowired
+    private TradeRepository tradeRepository;
 
 
+
+
+//    @Test
+//    public void testHome_withTrades_shouldReturnTradeListPage() throws Exception {
+//        // Given
+//        Trade trade1 = new Trade("a", "a", 1.0);
+//
+//        Trade trade2 = new Trade("a", "a", 1.0);
+//        tradeRepository.saveAll(Arrays.asList(trade1, trade2));
+//
+//        // When
+//        MvcResult result = mockMvc.perform(get("/trade/list"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("trade/list"))
+//                .andReturn();
+//
+//        // Then
+//        List<Trade> trades = (List<Trade>) result.getModelAndView().getModel().get("tradeList");
+//        assertEquals(2, trades.size());
+//        assertEquals(1, trades.get(0).getId());
+////        assertEquals(2, trades.get(1).g
+//    }
 //    @Test
 //    public void testHome() throws Exception {
 //        mockMvc.perform(get("/trade/list"))

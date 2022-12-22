@@ -100,10 +100,7 @@ public class TradeRestControllerTest {
     public void AddTradeNegativeTest() {
 
         //given
-        Trade trade = new Trade();
-        trade.setAccount("");
-        trade.setType("type");
-        trade.setBuyQuantity(1.0);
+        Trade trade = new Trade("", "type", 1.0);
 
         //when
         ResponseEntity<String> response = tradeRestController.addTrade(trade);
@@ -118,10 +115,7 @@ public class TradeRestControllerTest {
     public void AddTradeNegativeTest2() {
 
         //given
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("");
-        trade.setBuyQuantity(1.0);
+        Trade trade = new Trade("account", "", 1.0);
 
         //when
         ResponseEntity<String> response = tradeRestController.addTrade(trade);
@@ -136,10 +130,7 @@ public class TradeRestControllerTest {
     public void AddTradeNegativeTest3() {
 
         //given
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-        trade.setBuyQuantity(null);
+        Trade trade = new Trade("account", "type", null);
 
         //when
         ResponseEntity<String> response = tradeRestController.addTrade(trade);
@@ -154,10 +145,7 @@ public class TradeRestControllerTest {
     public void AddTradeTest() {
 
         //given
-        Trade trade = new Trade();
-        trade.setAccount("account");
-        trade.setType("type");
-        trade.setBuyQuantity(1.0);
+        Trade trade = new Trade("account", "type", 1.0);
 
         //when
         ResponseEntity<String> response = tradeRestController.addTrade(trade);
@@ -172,7 +160,7 @@ public class TradeRestControllerTest {
     public void updateTradeTest() throws NotExistingException {
 
         //given
-        Trade trade = new Trade("account", "type");
+        Trade trade = new Trade("account", "type", 1.0);
         when(tradeService.existsById(1)).thenReturn(true);
 
         //when
@@ -197,6 +185,54 @@ public class TradeRestControllerTest {
         //then
         verify(tradeService, never()).updateTrade(1, trade);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+
+    @Test
+    public void updateTradeNegativeTest2() throws NotExistingException {
+
+        //given
+        Trade trade = new Trade("", "type", 1.0);
+        when(tradeService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = tradeRestController.updateTrade(1, trade);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Account is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateTradeNegativeTest3() throws NotExistingException {
+
+        //given
+        Trade trade = new Trade("account", "", 1.0);
+        when(tradeService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = tradeRestController.updateTrade(1, trade);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Type is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateTradeNegativeTest4() throws NotExistingException {
+
+        //given
+        Trade trade = new Trade("account", "type", null);
+        when(tradeService.existsById(1)).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = tradeRestController.updateTrade(1, trade);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("BuyQuantity is mandatory", response.getBody());
     }
 
 

@@ -189,6 +189,56 @@ public class CurveRestControllerTest {
 
 
     @Test
+    public void updateCurveNegativeTest2() throws NotExistingException {
+
+        //given
+        CurvePoint curve = new CurvePoint(null, 1.0, 1.0);
+        when(curveService.existsById(anyInt())).thenReturn(true);
+
+        //when
+        ResponseEntity<String> response = curveRestController.updateCurve(1, curve);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("CurvePointId is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateCurveNegativeTest3() throws NotExistingException {
+
+        //given
+        CurvePoint curve = new CurvePoint(1, null, 1.0);
+        when(curveService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = curveRestController.updateCurve(1, curve);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Term is mandatory", response.getBody());
+    }
+
+
+    @Test
+    public void updateCurveNegativeTest4() throws NotExistingException {
+
+        //given
+        CurvePoint curve = new CurvePoint(1, 1.0, null);
+        when(curveService.existsById(anyInt())).thenReturn(true);
+
+
+        //when
+        ResponseEntity<String> response = curveRestController.updateCurve(1, curve);
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Value is mandatory", response.getBody());
+    }
+
+
+    @Test
     public void deleteCurveTest() throws NotExistingException {
 
         // given
