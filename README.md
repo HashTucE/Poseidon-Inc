@@ -37,9 +37,9 @@ Can be use with a browser or via software like Postman
   
 - Copy/paste SQL scripts :
 
-  - Use this [script](https://github.com/HashTucE/PayMyBuddy/blob/main/src/main/resources/doc/schema.sql) to create the datatbase.
+  - Use this [script](https://github.com/HashTucE/Poseidon-Inc/src/main/resources/doc/schema.sql) to create the datatbase.
 
-  - Use this [script](https://github.com/HashTucE/PayMyBuddy/blob/main/src/main/resources/doc/data.sql) to create an admin and a user.
+  - Use this [script](https://github.com/HashTucE/Poseidon-Inc/src/main/resources/doc/data.sql) to create an admin and a user.
 
 - Additional informations :
   - Then to sign in with any of these 2 first account, use the password `&&`.
@@ -64,8 +64,7 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.username=??
 ![uml](https://user-images.githubusercontent.com/95872501/209088546-ebcaa663-b75a-46ae-bece-fe31cd995b37.png)
 
 # JaCoCo Code Coverage
-![image](https://user-images.githubusercontent.com/95872501/209088728-1be99082-f164-4ba4-86db-2aa976f98d98.png)
-
+![Capture d’écran 2022-12-22 à 09 19 43](https://user-images.githubusercontent.com/95872501/209089621-20ac00aa-46ea-466f-98a9-ac8d7be3ecbf.png)
 
 # Technology Stack
 ![Capture d’écran 2022-12-05 à 01 19 56](https://user-images.githubusercontent.com/95872501/205524881-6a809029-414e-4a1f-b339-15154421f01a.png)
