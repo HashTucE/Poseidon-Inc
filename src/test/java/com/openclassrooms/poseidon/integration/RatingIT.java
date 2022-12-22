@@ -1,8 +1,8 @@
 package com.openclassrooms.poseidon.integration;
 
-import com.openclassrooms.poseidon.domain.User;
+import com.openclassrooms.poseidon.domain.Rating;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
-import com.openclassrooms.poseidon.services.UserService;
+import com.openclassrooms.poseidon.services.RatingService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,20 +18,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 //@ActiveProfiles("test")
 //@TestPropertySource(properties = "spring.profiles.active=test")
 //@Sql({"/doc/schema.sql", "/doc/data.sql"})
-public class UserIT {
+public class RatingIT {
 
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
+    private RatingService ratingService;
 
     private int id = 0;
 
@@ -40,16 +41,16 @@ public class UserIT {
     @BeforeEach
     public void before() {
 
-        User user = new User("IT", "Passw0rd@", "IT", "USER");
-        userService.addUser(user);
-        id = user.getId();
+        Rating rating = new Rating("IT", "IT", "IT", 1);
+        ratingService.addRating(rating);
+        id = rating.getId();
     }
 
     @AfterEach
     public void after() {
 
         try {
-            userService.deleteById(id);}
+            ratingService.deleteById(id);}
         catch (NotExistingException e) {}
     }
 
@@ -57,7 +58,7 @@ public class UserIT {
     @Test
     public void homeTest() throws Exception {
 
-        mockMvc.perform(get("/user/list"))
+        mockMvc.perform(get("/rating/list"))
                 .andExpect(status().isOk());
     }
 
@@ -65,12 +66,12 @@ public class UserIT {
     @Test
     public void validateTest() throws Exception {
 
-        mockMvc.perform(post("/user/validate")
-                        .param("username", "IT")
-                        .param("password", "Passw0rd@")
-                        .param("fullname", "IT")
-                        .param("role", "USER"))
-                .andExpect(redirectedUrl("/user/list"))
+        mockMvc.perform(post("/rating/validate")
+                        .param("moodysRating", "IT")
+                        .param("sandPRating", "IT")
+                        .param("fitchRating", "IT")
+                        .param("orderNumber", String.valueOf(2)))
+                .andExpect(redirectedUrl("/rating/list"))
                 .andExpect(status().isFound());
     }
 
@@ -78,30 +79,30 @@ public class UserIT {
     @Test
     public void showUpdateFormTest() throws Exception {
 
-        mockMvc.perform(get("/user/update/{id}", id))
+        mockMvc.perform(get("/rating/update/{id}", id))
                 .andExpect(status().isOk());
     }
 
 
     @Test
-    public void updateUserTest() throws Exception {
+    public void updateRatingTest() throws Exception {
 
-        mockMvc.perform(post("/user/update/{id}", id)
-                        .param("username", "IT")
-                        .param("password", "Passw0rd@")
-                        .param("fullname", "IT")
-                        .param("role", "ADMIN"))
-                .andExpect(redirectedUrl("/user/list"))
+        mockMvc.perform(post("/rating/update/{id}", id)
+                        .param("moodysRating", "IT")
+                        .param("sandPRating", "IT")
+                        .param("fitchRating", "IT")
+                        .param("orderNumber", String.valueOf(2)))
+                .andExpect(redirectedUrl("/rating/list"))
                 .andExpect(status().isFound())
                 .andReturn();
     }
 
 
     @Test
-    public void deleteUserTest() throws Exception {
+    public void deleteRatingTest() throws Exception {
 
-        mockMvc.perform(get("/user/delete/{id}", id))
-                .andExpect(redirectedUrl("/user/list"))
+        mockMvc.perform(get("/rating/delete/{id}", id))
+                .andExpect(redirectedUrl("/rating/list"))
                 .andExpect(status().isFound())
                 .andReturn();
     }

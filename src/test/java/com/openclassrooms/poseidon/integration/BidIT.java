@@ -1,8 +1,8 @@
 package com.openclassrooms.poseidon.integration;
 
-import com.openclassrooms.poseidon.domain.User;
+import com.openclassrooms.poseidon.domain.BidList;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
-import com.openclassrooms.poseidon.services.UserService;
+import com.openclassrooms.poseidon.services.BidListService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,14 +24,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@ActiveProfiles("test")
 //@TestPropertySource(properties = "spring.profiles.active=test")
 //@Sql({"/doc/schema.sql", "/doc/data.sql"})
-public class UserIT {
+public class BidIT {
 
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
+    private BidListService bidListService;
 
     private int id = 0;
 
@@ -40,16 +40,16 @@ public class UserIT {
     @BeforeEach
     public void before() {
 
-        User user = new User("IT", "Passw0rd@", "IT", "USER");
-        userService.addUser(user);
-        id = user.getId();
+        BidList bidList = new BidList("IT", "IT", 10.0);
+        bidListService.addBid(bidList);
+        id = bidList.getId();
     }
 
     @AfterEach
     public void after() {
 
         try {
-            userService.deleteById(id);}
+            bidListService.deleteById(id);}
         catch (NotExistingException e) {}
     }
 
@@ -57,7 +57,7 @@ public class UserIT {
     @Test
     public void homeTest() throws Exception {
 
-        mockMvc.perform(get("/user/list"))
+        mockMvc.perform(get("/bidList/list"))
                 .andExpect(status().isOk());
     }
 
@@ -65,12 +65,11 @@ public class UserIT {
     @Test
     public void validateTest() throws Exception {
 
-        mockMvc.perform(post("/user/validate")
-                        .param("username", "IT")
-                        .param("password", "Passw0rd@")
-                        .param("fullname", "IT")
-                        .param("role", "USER"))
-                .andExpect(redirectedUrl("/user/list"))
+        mockMvc.perform(post("/bidList/validate")
+                        .param("account", "IT")
+                        .param("type", "IT")
+                        .param("bidQuantity", String.valueOf(10.0)))
+                .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(status().isFound());
     }
 
@@ -78,30 +77,29 @@ public class UserIT {
     @Test
     public void showUpdateFormTest() throws Exception {
 
-        mockMvc.perform(get("/user/update/{id}", id))
+        mockMvc.perform(get("/bidList/update/{id}", id))
                 .andExpect(status().isOk());
     }
 
 
     @Test
-    public void updateUserTest() throws Exception {
+    public void updateBidListTest() throws Exception {
 
-        mockMvc.perform(post("/user/update/{id}", id)
-                        .param("username", "IT")
-                        .param("password", "Passw0rd@")
-                        .param("fullname", "IT")
-                        .param("role", "ADMIN"))
-                .andExpect(redirectedUrl("/user/list"))
+        mockMvc.perform(post("/bidList/update/{id}", id)
+                        .param("account", "IT")
+                        .param("type", "IT")
+                        .param("bidQuantity", "20.0"))
+                .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(status().isFound())
                 .andReturn();
     }
 
 
     @Test
-    public void deleteUserTest() throws Exception {
+    public void deleteBidListTest() throws Exception {
 
-        mockMvc.perform(get("/user/delete/{id}", id))
-                .andExpect(redirectedUrl("/user/list"))
+        mockMvc.perform(get("/bidList/delete/{id}", id))
+                .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(status().isFound())
                 .andReturn();
     }
