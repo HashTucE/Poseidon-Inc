@@ -1,5 +1,6 @@
 package com.openclassrooms.poseidon.integration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.poseidon.domain.CurvePoint;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.CurveService;
@@ -10,21 +11,19 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@ActiveProfiles("test")
-//@TestPropertySource(properties = "spring.profiles.active=test")
-//@Sql({"/doc/schema.sql", "/doc/data.sql"})
+@ActiveProfiles("test")
 public class CurveIT {
 
 
@@ -34,14 +33,19 @@ public class CurveIT {
     @Autowired
     private CurveService curveService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private int id = 0;
+
+    private CurvePoint curvePoint;
 
 
 
     @BeforeEach
     public void before() {
 
-        CurvePoint curvePoint = new CurvePoint(1, 1.0, 1.0);
+        curvePoint = new CurvePoint(1, 1.0, 1.0);
         curveService.addCurvePoint(curvePoint);
         id = curvePoint.getId();
     }
@@ -103,5 +107,121 @@ public class CurveIT {
                 .andExpect(redirectedUrl("/curvePoint/list"))
                 .andExpect(status().isFound())
                 .andReturn();
+    }
+
+
+    ////////////////////////////////////////REST CONTROLLERS////////////////////////////////////////
+
+
+
+    @Test
+    public void testGetAllCurve() throws Exception {
+
+        CurvePoint curvePoint0 = new CurvePoint(1, 1.0, 1.0);
+        curveService.addCurvePoint(curvePoint0);
+        int id0 = curvePoint0.getId();
+
+        mockMvc.perform(get("/api/curve/all"))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))))
+                .andExpect(jsonPath("$..id", hasItems(curvePoint.getId(), curvePoint0.getId())))
+                .andExpect(jsonPath("$..curveId", hasItems(curvePoint.getCurveId(), curvePoint0.getCurveId())))
+                .andExpect(jsonPath("$..term", hasItems(curvePoint.getTerm(), curvePoint0.getTerm())))
+                .andExpect(jsonPath("$..value", hasItems(curvePoint.getValue(), curvePoint0.getValue())));
+
+        curveService.deleteById(id0);
+    }
+
+
+    @Test
+    public void getCurveAPITest() throws Exception {
+
+        mockMvc.perform(get("/api/curve")
+                        .param("id", String.valueOf(id)))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.curveId").value(1))
+                .andExpect(jsonPath("$.term").value(1.0))
+                .andExpect(jsonPath("$.value").value(1.0));
+
+
+    }
+
+
+    @Test
+    public void testAddCurve() throws Exception {
+
+        String requestBody = objectMapper.writeValueAsString(curvePoint);
+
+        mockMvc.perform(post("/api/curve")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("Curve created !"));
+
+        //check if object is well created
+        mockMvc.perform(get("/api/curve")
+                        .param("id", String.valueOf(id)))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.curveId").value(curvePoint.getCurveId()))
+                .andExpect(jsonPath("$.term").value(curvePoint.getTerm()))
+                .andExpect(jsonPath("$.value").value(curvePoint.getValue()));
+
+        //check answer with invalid object
+        curvePoint.setCurveId(null);
+        requestBody = objectMapper.writeValueAsString(curvePoint);
+        mockMvc.perform(post("/api/curve")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("CurvePointId is mandatory"));
+    }
+
+
+    @Test
+    public void updateCurveAPITest() throws Exception {
+
+        CurvePoint curveToUpdate = new CurvePoint(2, 1.0, 1.0);
+
+        mockMvc.perform(put("/api/curve")
+                        .param("id", String.valueOf(id))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(curveToUpdate)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Curve with id " + id + " updated !"));
+
+        //check if object is well updated
+        mockMvc.perform(get("/api/curve")
+                        .param("id", String.valueOf(id)))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.curveId").value(curveToUpdate.getCurveId()))
+                .andExpect(jsonPath("$.term").value(curveToUpdate.getTerm()))
+                .andExpect(jsonPath("$.value").value(curveToUpdate.getValue()));
+
+        //check answer with invalid object
+        curvePoint.setCurveId(null);
+        String requestBody = objectMapper.writeValueAsString(curvePoint);
+        mockMvc.perform(put("/api/curve")
+                        .param("id", String.valueOf(id))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("CurvePointId is mandatory"));
+    }
+
+
+
+    @Test
+    public void deleteCurveAPITest() throws Exception {
+
+        mockMvc.perform(delete("/api/curve")
+                        .param("id", String.valueOf(id)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Curve with id " + id + " deleted !"));
+
+        //check if object is well deleted
+        mockMvc.perform(get("/api/curve" + id))
+                .andExpect(status().isNotFound());
     }
 }

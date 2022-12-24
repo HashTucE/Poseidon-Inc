@@ -1,6 +1,5 @@
 package com.openclassrooms.poseidon.controllers;
 
-import com.openclassrooms.poseidon.configuration.ValidPassword;
 import com.openclassrooms.poseidon.constants.Log;
 import com.openclassrooms.poseidon.domain.User;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;

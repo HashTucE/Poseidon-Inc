@@ -1,5 +1,5 @@
-CREATE TABLE bids(
-  id tinyint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE bids (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
   bidQuantity DOUBLE,
@@ -24,7 +24,7 @@ CREATE TABLE bids(
 );
 
 CREATE TABLE trades (
-  id tinyint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
   buyQuantity DOUBLE,
@@ -48,8 +48,8 @@ CREATE TABLE trades (
 );
 
 CREATE TABLE curves (
-  id tinyint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  curveId tinyint,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  curveId int,
   asOfDate TIMESTAMP,
   term DOUBLE ,
   value DOUBLE ,
@@ -57,15 +57,15 @@ CREATE TABLE curves (
 );
 
 CREATE TABLE ratings (
-  id tinyint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   moodysRating VARCHAR(125),
   sandPRating VARCHAR(125),
   fitchRating VARCHAR(125),
-  orderNumber tinyint
+  orderNumber int
 );
 
 CREATE TABLE rules (
-  id tinyint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(125),
   description VARCHAR(125),
   json VARCHAR(125),
@@ -75,9 +75,15 @@ CREATE TABLE rules (
 );
 
 CREATE TABLE users (
-  id tinyint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(125),
   password VARCHAR(125),
   fullname VARCHAR(125),
   role VARCHAR(125)
 );
+
+DROP TABLE bids;
+DROP TABLE trades;
+DROP TABLE curves;
+DROP TABLE ratings;
+DROP TABLE rules;
