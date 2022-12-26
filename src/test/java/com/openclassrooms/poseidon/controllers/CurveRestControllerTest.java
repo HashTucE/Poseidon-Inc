@@ -146,13 +146,14 @@ public class CurveRestControllerTest {
 
         //given
         CurvePoint curve = new CurvePoint(1, 1.0, 1.0);
+        curve.setId(1);
 
         //when
         ResponseEntity<String> response = curveRestController.addCurve(curve);
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Curve created !", response.getBody());
+        assertEquals("Curve with id 1 created !", response.getBody());
     }
 
 

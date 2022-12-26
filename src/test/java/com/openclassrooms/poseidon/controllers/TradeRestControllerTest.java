@@ -146,13 +146,14 @@ public class TradeRestControllerTest {
 
         //given
         Trade trade = new Trade("account", "type", 1.0);
+        trade.setId(1);
 
         //when
         ResponseEntity<String> response = tradeRestController.addTrade(trade);
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Trade created !", response.getBody());
+        assertEquals("Trade with id 1 created !", response.getBody());
     }
 
 

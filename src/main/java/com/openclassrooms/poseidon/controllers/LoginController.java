@@ -55,20 +55,6 @@ public class LoginController {
     }
 
 
-//    /**
-//     * redirect to login
-//     * @return ModelAndView
-//     */
-//    @GetMapping("secure/article-details")
-//    public ModelAndView getAllUserArticles() {
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("users", userService.findAll());
-//        mav.setViewName("user/list");
-//        return mav;
-//    }
-
-
-
     /**
      * display error page when request is unauthorized
      * @return ModelAndView

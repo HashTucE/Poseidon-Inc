@@ -101,13 +101,14 @@ public class RuleNameRestControllerTest {
 
         //given
         RuleName rule = new RuleName("a", "a", "a", "a", "a", "a");
+        rule.setId(1);
 
         //when
         ResponseEntity<String> response = ruleNameRestController.addRule(rule);
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Rule created !", response.getBody());
+        assertEquals("Rule with id 1 created !", response.getBody());
     }
 
 

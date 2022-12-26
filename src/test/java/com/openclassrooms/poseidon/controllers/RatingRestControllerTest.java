@@ -160,13 +160,14 @@ public class RatingRestControllerTest {
 
         //given
         Rating rating = new Rating("a", "a", "a", 1);
+        rating.setId(1);
 
         //when
         ResponseEntity<String> response = ratingRestController.addRating(rating);
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Rating created !", response.getBody());
+        assertEquals("Rating with id 1 created !", response.getBody());
     }
 
 

@@ -163,7 +163,7 @@ public class UserRestControllerTest {
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("User created !", response.getBody());
+        assertEquals("User with id 1 created !", response.getBody());
     }
 
 

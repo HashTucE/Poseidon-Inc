@@ -143,13 +143,14 @@ public class BidListRestControllerTest {
 
         //given
         BidList bid = new BidList("account", "type", 1.0);
+        bid.setId(1);
 
         //when
         ResponseEntity<String> response = bidListRestController.addBid(bid);
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Bid created !", response.getBody());
+        assertEquals("Bid with id 1 created !", response.getBody());
     }
 
 
