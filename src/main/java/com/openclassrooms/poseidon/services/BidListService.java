@@ -20,8 +20,12 @@ public class BidListService {
     @Autowired
     private BidListRepository bidListRepository;
 
-    
 
+    /**
+     * call findAll from repository
+     * @return bid list
+     * @throws EmptyListException e
+     */
     public List<BidList> findAll() throws EmptyListException {
 
         if(bidListRepository.findAll().isEmpty()) {
@@ -33,6 +37,12 @@ public class BidListService {
     }
 
 
+    /**
+     * check if an object exist by id
+     * @param id id
+     * @return boolean
+     * @throws NotExistingException e
+     */
     public boolean existsById(int id) throws NotExistingException {
 
         boolean isBidExist = bidListRepository.existsById(id);
@@ -44,15 +54,24 @@ public class BidListService {
     }
 
 
-
+    /**
+     * call findById from repository
+     * @param id id
+     * @return bid object
+     * @throws NotExistingException e
+     */
     public BidList findById(int id) throws NotExistingException {
 
         log.debug("findById = " + id + " from BidList service called");
         return bidListRepository.findById(id).orElseThrow(()-> new NotExistingException("bid", id));
     }
-    
 
 
+    /**
+     * call save method from repository
+     * @param bid bid
+     * @return bid object
+     */
     public BidList addBid(BidList bid) {
 
         bidListRepository.save(bid);
@@ -61,7 +80,12 @@ public class BidListService {
     }
 
 
-
+    /**
+     * update a bid calling save from repository
+     * @param id id
+     * @param bid bid
+     * @throws NotExistingException e
+     */
     public void updateBid(int id, BidList bid) throws NotExistingException {
 
         BidList bidToModify = findById(id);
@@ -74,7 +98,11 @@ public class BidListService {
     }
 
 
-
+    /**
+     * delete an object by id calling delete from repository
+     * @param id id
+     * @throws NotExistingException e
+     */
     public void deleteById(int id) throws NotExistingException {
 
         BidList optionalBid = findById(id);

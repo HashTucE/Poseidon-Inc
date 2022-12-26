@@ -27,7 +27,11 @@ public class RuleNameController {
     }
 
 
-
+    /**
+     * display the ruleName list
+     * @param model model
+     * @return string path
+     */
     @RequestMapping("/ruleName/list")
     public String home(Model model) {
 
@@ -41,6 +45,10 @@ public class RuleNameController {
 
 
 
+    /**
+     * display add ruleName form
+     * @return string path
+     */
     @GetMapping("/ruleName/add")
     public String addRuleForm(RuleName rule) {
 
@@ -49,6 +57,12 @@ public class RuleNameController {
 
 
 
+    /**
+     * redirect after add ruleName
+     * @param ruleName ruleName
+     * @param result result
+     * @return string path
+     */
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result) {
 
@@ -61,6 +75,13 @@ public class RuleNameController {
 
 
 
+    /**
+     * display update ruleName form
+     * @param id id
+     * @param model model
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws NotExistingException {
 
@@ -72,6 +93,14 @@ public class RuleNameController {
 
 
 
+    /**
+     * redirect after update ruleName
+     * @param id id
+     * @param ruleName ruleName
+     * @param result result
+     * @return string path
+     * @throws NotExistingException e
+     */
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
                              BindingResult result) throws NotExistingException {
@@ -84,6 +113,12 @@ public class RuleNameController {
 
 
 
+    /**
+     * redirect after delete ruleName
+     * @param id id
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id) throws NotExistingException {
 

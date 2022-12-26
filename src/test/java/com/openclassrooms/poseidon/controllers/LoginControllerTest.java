@@ -83,24 +83,24 @@ public class LoginControllerTest {
     }
 
 
-    @Test
-    public void testGetAllUserArticles() {
-
-        //given
-        when(userService.findAll()).thenReturn(Arrays.asList(
-                new User(0, "john", "a", "a", "USER"),
-                new User(1, "jane", "a", "a", "USER")));
-
-        //when
-        ModelAndView mav = loginController.getAllUserArticles();
-
-        //then
-        assertEquals("user/list", mav.getViewName());
-        List<User> users = (List<User>) mav.getModel().get("users");
-        assertEquals(2, users.size());
-        assertEquals("john", users.get(0).getUsername());
-        assertEquals("jane", users.get(1).getUsername());
-    }
+//    @Test
+//    public void testGetAllUserArticles() {
+//
+//        //given
+//        when(userService.findAll()).thenReturn(Arrays.asList(
+//                new User(0, "john", "a", "a", "USER"),
+//                new User(1, "jane", "a", "a", "USER")));
+//
+//        //when
+//        ModelAndView mav = loginController.getAllUserArticles();
+//
+//        //then
+//        assertEquals("user/list", mav.getViewName());
+//        List<User> users = (List<User>) mav.getModel().get("users");
+//        assertEquals(2, users.size());
+//        assertEquals("john", users.get(0).getUsername());
+//        assertEquals("jane", users.get(1).getUsername());
+//    }
 
 
     @Test

@@ -161,7 +161,7 @@ public class RatingIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Rating created !"));
+                .andExpect(content().string("Rating with id " + id + " created !"));
 
         //check if object is well created
         mockMvc.perform(get("/api/rating")

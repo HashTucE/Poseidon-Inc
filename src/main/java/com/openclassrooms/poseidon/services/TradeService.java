@@ -21,7 +21,11 @@ public class TradeService {
     private TradeRepository tradeRepository;
 
 
-
+    /**
+     * call findAll from repository
+     * @return trade list
+     * @throws EmptyListException e
+     */
     public List<Trade> findAll() throws EmptyListException {
 
         if(tradeRepository.findAll().isEmpty()) {
@@ -33,6 +37,12 @@ public class TradeService {
     }
 
 
+    /**
+     * check if an object exist by id
+     * @param id id
+     * @return boolean
+     * @throws NotExistingException e
+     */
     public boolean existsById(int id) throws NotExistingException {
 
         boolean isTradeExist = tradeRepository.existsById(id);
@@ -44,7 +54,12 @@ public class TradeService {
     }
 
 
-
+    /**
+     * call findById from repository
+     * @param id id
+     * @return trade object
+     * @throws NotExistingException e
+     */
     public Trade findById(int id) throws NotExistingException {
 
         log.debug("findById = " + id + " from Trade service called");
@@ -52,7 +67,11 @@ public class TradeService {
     }
 
 
-
+    /**
+     * call save method from repository
+     * @param trade trade
+     * @return trade object
+     */
     public Trade addTrade(Trade trade) {
 
         tradeRepository.save(trade);
@@ -61,7 +80,12 @@ public class TradeService {
     }
 
 
-
+    /**
+     * update a trade calling save from repository
+     * @param id id
+     * @param trade trade
+     * @throws NotExistingException e
+     */
     public void updateTrade(int id, Trade trade) throws NotExistingException {
 
         Trade tradeToModify = findById(id);
@@ -74,7 +98,11 @@ public class TradeService {
     }
 
 
-
+    /**
+     * delete an object by id calling delete from repository
+     * @param id id
+     * @throws NotExistingException e
+     */
     public void deleteById(int id) throws NotExistingException {
 
         Trade tradeToDelete = findById(id);

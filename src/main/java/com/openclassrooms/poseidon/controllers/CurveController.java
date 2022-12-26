@@ -27,7 +27,11 @@ public class CurveController {
     }
 
 
-
+    /**
+     * display the curvePoint list
+     * @param model model
+     * @return string path
+     */
     @RequestMapping("/curvePoint/list")
     public String home(Model model) {
 
@@ -41,6 +45,10 @@ public class CurveController {
 
 
 
+    /**
+     * display add curvePoint form
+     * @return string path
+     */
     @GetMapping("/curvePoint/add")
     public String addCurveForm(CurvePoint bid) {
 
@@ -49,6 +57,12 @@ public class CurveController {
 
 
 
+    /**
+     * redirect after add curvePoint
+     * @param curvePoint curvePoint
+     * @param result result
+     * @return string path
+     */
     @PostMapping("/curvePoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result) {
 
@@ -61,6 +75,13 @@ public class CurveController {
 
 
 
+    /**
+     * display update curvePoint form
+     * @param id id
+     * @param model model
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws NotExistingException {
 
@@ -72,6 +93,14 @@ public class CurveController {
 
 
 
+    /**
+     * redirect after update curvePoint
+     * @param id id
+     * @param curvePoint curvePoint
+     * @param result result
+     * @return string path
+     * @throws NotExistingException e
+     */
     @PostMapping("/curvePoint/update/{id}")
     public String updateCurve(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                              BindingResult result) throws NotExistingException {
@@ -84,7 +113,12 @@ public class CurveController {
     }
 
 
-
+    /**
+     * redirect after delete curvePoint
+     * @param id id
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteCurve(@PathVariable("id") Integer id) throws NotExistingException {
 

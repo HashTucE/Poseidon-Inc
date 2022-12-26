@@ -21,7 +21,11 @@ public class RuleNameService {
     private RuleNameRepository ruleNameRepository;
 
 
-
+    /**
+     * call findAll from repository
+     * @return ruleName list
+     * @throws EmptyListException e
+     */
     public List<RuleName> findAll() throws EmptyListException {
 
         if(ruleNameRepository.findAll().isEmpty()) {
@@ -33,6 +37,12 @@ public class RuleNameService {
     }
 
 
+    /**
+     * check if an object exist by id
+     * @param id id
+     * @return boolean
+     * @throws NotExistingException e
+     */
     public boolean existsById(int id) throws NotExistingException {
 
         boolean isRuleExist = ruleNameRepository.existsById(id);
@@ -44,7 +54,12 @@ public class RuleNameService {
     }
 
 
-
+    /**
+     * call findById from repository
+     * @param id id
+     * @return ruleName object
+     * @throws NotExistingException e
+     */
     public RuleName findById(int id) throws NotExistingException {
 
         log.debug("findById = " + id + " from RuleName service called");
@@ -52,7 +67,11 @@ public class RuleNameService {
     }
 
 
-
+    /**
+     * call save method from repository
+     * @param ruleName ruleName
+     * @return ruleName object
+     */
     public RuleName addRuleName(RuleName ruleName) {
 
         ruleNameRepository.save(ruleName);
@@ -61,7 +80,12 @@ public class RuleNameService {
     }
 
 
-
+    /**
+     * update a ruleName calling save from repository
+     * @param id id
+     * @param ruleName ruleName
+     * @throws NotExistingException e
+     */
     public void updateRuleName(int id, RuleName ruleName) throws NotExistingException {
 
         RuleName ruleNameToModify = findById(id);
@@ -77,7 +101,11 @@ public class RuleNameService {
     }
 
 
-
+    /**
+     * delete an object by id calling delete from repository
+     * @param id id
+     * @throws NotExistingException e
+     */
     public void deleteById(int id) throws NotExistingException {
 
         RuleName optionalRuleName = findById(id);

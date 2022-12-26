@@ -27,7 +27,11 @@ public class TradeController {
     }
 
 
-
+    /**
+     * display the trade list
+     * @param model model
+     * @return string path
+     */
     @RequestMapping("/trade/list")
     public String home(Model model) {
 
@@ -41,6 +45,10 @@ public class TradeController {
 
 
 
+    /**
+     * display add trade form
+     * @return string path
+     */
     @GetMapping("/trade/add")
     public String addTradeForm(Trade trade) {
 
@@ -49,6 +57,12 @@ public class TradeController {
 
 
 
+    /**
+     * redirect after add trade
+     * @param trade trade
+     * @param result result
+     * @return string path
+     */
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result) {
 
@@ -61,6 +75,13 @@ public class TradeController {
 
 
 
+    /**
+     * display update trade form
+     * @param id id
+     * @param model model
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws NotExistingException {
 
@@ -72,6 +93,14 @@ public class TradeController {
 
 
 
+    /**
+     * redirect after update trade
+     * @param id id
+     * @param trade trade
+     * @param result result
+     * @return string path
+     * @throws NotExistingException e
+     */
     @PostMapping("/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                              BindingResult result) throws NotExistingException {
@@ -85,6 +114,12 @@ public class TradeController {
 
 
 
+    /**
+     * redirect after delete trade
+     * @param id id
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id) throws NotExistingException {
 

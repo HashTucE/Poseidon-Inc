@@ -155,7 +155,7 @@ public class TradeIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Trade created !"));
+                .andExpect(content().string("Trade with id " + id + " created !"));
 
         //check if object is well created
         mockMvc.perform(get("/api/trade")

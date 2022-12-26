@@ -23,6 +23,11 @@ public class UserController {
     private UserService userService;
 
 
+    /**
+     * display the user list
+     * @param model model
+     * @return string path
+     */
     @RequestMapping("/user/list")
     public String home(Model model)
     {
@@ -31,12 +36,22 @@ public class UserController {
     }
 
 
+    /**
+     * display add user form
+     * @return string path
+     */
     @GetMapping("/user/add")
     public String addUser(User user) {
         return "user/add";
     }
 
 
+    /**
+     * redirect after add user
+     * @param user user
+     * @param result result
+     * @return string path
+     */
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result) {
 
@@ -48,6 +63,13 @@ public class UserController {
     }
 
 
+    /**
+     * display update user form
+     * @param id id
+     * @param model model
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws NotExistingException {
         User user = userService.findById(id);
@@ -58,6 +80,14 @@ public class UserController {
     }
 
 
+    /**
+     * redirect after update user
+     * @param id id
+     * @param user user
+     * @param result result
+     * @return string path
+     * @throws NotExistingException e
+     */
     @PostMapping("/user/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user,
                              BindingResult result) throws NotExistingException {
@@ -70,6 +100,12 @@ public class UserController {
     }
 
 
+    /**
+     * redirect after delete user
+     * @param id id
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) throws NotExistingException {
 

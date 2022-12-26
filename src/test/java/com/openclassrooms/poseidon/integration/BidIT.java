@@ -156,7 +156,7 @@ public class BidIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Bid created !"));
+                .andExpect(content().string("Bid with id " + id + " created !"));
 
         //check if object is well created
         mockMvc.perform(get("/api/bidList")

@@ -25,7 +25,10 @@ public class LoginController {
     private UserService userService;
 
 
-
+    /**
+     * redirect to login
+     * @return ModelAndView
+     */
     @GetMapping("/")
     public ModelAndView url() {
 
@@ -37,6 +40,10 @@ public class LoginController {
     }
 
 
+    /**
+     * display login page
+     * @return ModelAndView
+     */
     @GetMapping("/login")
     public ModelAndView login() {
 
@@ -48,15 +55,24 @@ public class LoginController {
     }
 
 
-    @GetMapping("secure/article-details")
-    public ModelAndView getAllUserArticles() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userService.findAll());
-        mav.setViewName("user/list");
-        return mav;
-    }
+//    /**
+//     * redirect to login
+//     * @return ModelAndView
+//     */
+//    @GetMapping("secure/article-details")
+//    public ModelAndView getAllUserArticles() {
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("users", userService.findAll());
+//        mav.setViewName("user/list");
+//        return mav;
+//    }
 
 
+
+    /**
+     * display error page when request is unauthorized
+     * @return ModelAndView
+     */
     @GetMapping("error")
     public ModelAndView error() {
         ModelAndView mav = new ModelAndView();
@@ -67,6 +83,10 @@ public class LoginController {
     }
 
 
+    /**
+     * redirect to login after logout
+     * @return ModelAndView
+     */
     @PostMapping("/logout")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

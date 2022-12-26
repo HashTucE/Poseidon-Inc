@@ -157,7 +157,7 @@ public class CurveIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Curve created !"));
+                .andExpect(content().string("Curve with id " + id + " created !"));
 
         //check if object is well created
         mockMvc.perform(get("/api/curve")

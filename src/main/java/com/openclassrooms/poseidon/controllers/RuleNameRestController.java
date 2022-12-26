@@ -102,7 +102,7 @@ public class RuleNameRestController {
         }
         ruleNameService.addRuleName(rule);
         log.info(Log.OBJECT_CREATED);
-        return new ResponseEntity<>("Rule created !", HttpStatus.CREATED);
+        return new ResponseEntity<>("Rule with id " + rule.getId() + " created !", HttpStatus.CREATED);
     }
 
 

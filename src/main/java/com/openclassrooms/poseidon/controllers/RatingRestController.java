@@ -96,7 +96,7 @@ public class RatingRestController {
         }
         ratingService.addRating(rating);
         log.info(Log.OBJECT_CREATED);
-        return new ResponseEntity<>("Rating created !", HttpStatus.CREATED);
+        return new ResponseEntity<>("Rating with id " + rating.getId() + " created !", HttpStatus.CREATED);
     }
 
 

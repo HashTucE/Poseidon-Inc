@@ -27,7 +27,11 @@ public class RatingController {
     }
 
 
-
+    /**
+     * display the rating list
+     * @param model model
+     * @return string path
+     */
     @RequestMapping("/rating/list")
     public String home(Model model) {
 
@@ -41,6 +45,10 @@ public class RatingController {
 
 
 
+    /**
+     * display add rating form
+     * @return string path
+     */
     @GetMapping("/rating/add")
     public String addRatingForm(Rating rating) {
 
@@ -49,6 +57,12 @@ public class RatingController {
 
 
 
+    /**
+     * redirect after add rating
+     * @param rating rating
+     * @param result result
+     * @return string path
+     */
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result) {
 
@@ -61,6 +75,13 @@ public class RatingController {
 
 
 
+    /**
+     * display update rating form
+     * @param id id
+     * @param model model
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws NotExistingException {
 
@@ -72,6 +93,14 @@ public class RatingController {
 
 
 
+    /**
+     * redirect after update rating
+     * @param id id
+     * @param rating rating
+     * @param result result
+     * @return string path
+     * @throws NotExistingException e
+     */
     @PostMapping("/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result) throws NotExistingException {
@@ -85,6 +114,12 @@ public class RatingController {
 
 
 
+    /**
+     * redirect after delete rating
+     * @param id id
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id) throws NotExistingException {
 

@@ -21,7 +21,11 @@ public class CurveService {
     private CurvePointRepository curvePointRepository;
 
 
-
+    /**
+     * call findAll from repository
+     * @return curve list
+     * @throws EmptyListException e
+     */
     public List<CurvePoint> findAll() throws EmptyListException {
 
         if(curvePointRepository.findAll().isEmpty()) {
@@ -33,6 +37,12 @@ public class CurveService {
     }
 
 
+    /**
+     * check if an object exist by id
+     * @param id id
+     * @return boolean
+     * @throws NotExistingException e
+     */
     public boolean existsById(int id) throws NotExistingException {
 
         boolean isCurveExist = curvePointRepository.existsById(id);
@@ -44,7 +54,12 @@ public class CurveService {
     }
 
 
-
+    /**
+     * call findById from repository
+     * @param id id
+     * @return curve object
+     * @throws NotExistingException e
+     */
     public CurvePoint findById(int id) throws NotExistingException {
 
         log.debug("findById = " + id + " from Curve service called");
@@ -52,7 +67,11 @@ public class CurveService {
     }
 
 
-
+    /**
+     * call save method from repository
+     * @param curvePoint curve
+     * @return curve object
+     */
     public CurvePoint addCurvePoint(CurvePoint curvePoint) {
 
         curvePointRepository.save(curvePoint);
@@ -61,7 +80,12 @@ public class CurveService {
     }
 
 
-
+    /**
+     * update a curve calling save from repository
+     * @param id id
+     * @param curvePoint curve
+     * @throws NotExistingException e
+     */
     public void updateCurvePoint(int id, CurvePoint curvePoint) throws NotExistingException {
 
         CurvePoint curvePointToModify = findById(id);
@@ -74,7 +98,11 @@ public class CurveService {
     }
 
 
-
+    /**
+     * delete an object by id calling delete from repository
+     * @param id id
+     * @throws NotExistingException e
+     */
     public void deleteById(int id) throws NotExistingException {
 
         CurvePoint optionalCurvePoint = findById(id);

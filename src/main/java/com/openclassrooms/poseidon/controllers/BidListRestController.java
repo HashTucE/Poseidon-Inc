@@ -93,7 +93,7 @@ public class BidListRestController {
         }
         bidListService.addBid(bid);
         log.info(Log.OBJECT_CREATED);
-        return new ResponseEntity<>("Bid created !", HttpStatus.CREATED);
+        return new ResponseEntity<>("Bid with id " + bid.getId() + " created !", HttpStatus.CREATED);
     }
 
 

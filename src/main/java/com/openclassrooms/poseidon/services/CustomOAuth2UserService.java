@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
+    /**
+     *
+     * @param userRequest userRequest
+     * @return Oauth2User
+     * @throws OAuth2AuthenticationException e
+     */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 

@@ -169,7 +169,7 @@ public class RuleIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Rule created !"));
+                .andExpect(content().string("Rule with id " + id + " created !"));
 
         //check if object is well created
         mockMvc.perform(get("/api/rule")

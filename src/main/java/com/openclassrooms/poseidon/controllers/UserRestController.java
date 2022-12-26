@@ -103,7 +103,7 @@ public class UserRestController {
         }
         userService.addUser(user);
         log.info(Log.OBJECT_CREATED);
-        return new ResponseEntity<>("User created !", HttpStatus.CREATED);
+        return new ResponseEntity<>("User with id " + user.getId() + " created !", HttpStatus.CREATED);
     }
 
 

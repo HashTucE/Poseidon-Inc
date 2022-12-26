@@ -27,7 +27,11 @@ public class BidListController {
     }
 
 
-
+    /**
+     * display the bidList
+     * @param model model
+     * @return string path
+     */
     @RequestMapping("/bidList/list")
     public String home(Model model) {
 
@@ -41,6 +45,10 @@ public class BidListController {
 
 
 
+    /**
+     * display add bid form
+     * @return string path
+     */
     @GetMapping("/bidList/add")
     public String addBidForm(BidList bid) {
 
@@ -48,7 +56,12 @@ public class BidListController {
     }
 
 
-
+    /**
+     * redirect after add bid
+     * @param bid bid
+     * @param result result
+     * @return string path
+     */
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result) {
 
@@ -60,7 +73,13 @@ public class BidListController {
     }
 
 
-
+    /**
+     * display update bid form
+     * @param id id
+     * @param model model
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws NotExistingException {
 
@@ -71,7 +90,14 @@ public class BidListController {
     }
 
 
-
+    /**
+     * redirect after update bid
+     * @param id id
+     * @param bid bid
+     * @param result result
+     * @return string path
+     * @throws NotExistingException e
+     */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bid,
                              BindingResult result) throws NotExistingException {
@@ -84,7 +110,12 @@ public class BidListController {
     }
 
 
-
+    /**
+     * redirect after delete bid
+     * @param id id
+     * @return string path
+     * @throws NotExistingException e
+     */
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id) throws NotExistingException {
 

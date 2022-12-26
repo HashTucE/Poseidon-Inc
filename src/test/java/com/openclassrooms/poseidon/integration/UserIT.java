@@ -161,7 +161,7 @@ public class UserIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("User created !"));
+                .andExpect(content().string("User with id " + id + " created !"));
 
         //check if object is well created
         mockMvc.perform(get("/api/user")

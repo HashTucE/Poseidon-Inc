@@ -94,7 +94,7 @@ public class TradeRestController {
         }
         tradeService.addTrade(trade);
         log.info(Log.OBJECT_CREATED);
-        return new ResponseEntity<>("Trade created !", HttpStatus.CREATED);
+        return new ResponseEntity<>("Trade with id " + trade.getId() + " created !", HttpStatus.CREATED);
     }
 
 

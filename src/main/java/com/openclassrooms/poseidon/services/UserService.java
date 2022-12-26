@@ -2,6 +2,7 @@ package com.openclassrooms.poseidon.services;
 
 
 import com.openclassrooms.poseidon.domain.User;
+import com.openclassrooms.poseidon.exceptions.EmptyListException;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.repositories.UserRepository;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +25,11 @@ public class UserService {
     private UserRepository userRepository;
 
 
-
+    /**
+     * call findAll from repository
+     * @return user list
+     * @throws EmptyListException e
+     */
     public List<User> findAll() {
 
         log.info("findAll from userService called");
@@ -32,6 +37,12 @@ public class UserService {
     }
 
 
+    /**
+     * check if an object exist by id
+     * @param id id
+     * @return boolean
+     * @throws NotExistingException e
+     */
     public boolean existsById(int id) throws NotExistingException {
 
         boolean isUserExist = userRepository.existsById(id);
@@ -43,6 +54,12 @@ public class UserService {
     }
 
 
+    /**
+     * call findById from repository
+     * @param id id
+     * @return user object
+     * @throws NotExistingException e
+     */
     public User findById(int id) throws NotExistingException {
 
         log.info("findById = " + id + " from userService called");
@@ -50,6 +67,11 @@ public class UserService {
     }
 
 
+    /**
+     * call save method from repository
+     * @param user user
+     * @return user object
+     */
     public User addUser(User user) {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -63,8 +85,12 @@ public class UserService {
     }
 
 
-
-
+    /**
+     * update a user calling save from repository
+     * @param id id
+     * @param user user
+     * @throws NotExistingException e
+     */
     public void updateUser(int id, User user) throws NotExistingException {
 
         User userToModify = findById(id);
@@ -80,7 +106,11 @@ public class UserService {
     }
 
 
-
+    /**
+     * delete an object by id calling delete from repository
+     * @param id id
+     * @throws NotExistingException e
+     */
     public void deleteById(int id) throws NotExistingException {
 
         User optionalUser = findById(id);
@@ -90,6 +120,11 @@ public class UserService {
     }
 
 
+    /**
+     * call findByUsername from repository
+     * @param username username
+     * @return user object
+     */
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

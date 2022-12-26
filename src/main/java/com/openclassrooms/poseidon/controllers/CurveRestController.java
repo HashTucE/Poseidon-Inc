@@ -93,7 +93,7 @@ public class CurveRestController {
         }
         curveService.addCurvePoint(curve);
         log.info(Log.OBJECT_CREATED);
-        return new ResponseEntity<>("Curve created !", HttpStatus.CREATED);
+        return new ResponseEntity<>("Curve with id " + curve.getId() + " created !", HttpStatus.CREATED);
     }
 
 

@@ -21,7 +21,11 @@ public class RatingService {
     private RatingRepository ratingRepository;
 
 
-
+    /**
+     * call findAll from repository
+     * @return rating list
+     * @throws EmptyListException e
+     */
     public List<Rating> findAll() throws EmptyListException {
 
         if(ratingRepository.findAll().isEmpty()) {
@@ -33,6 +37,12 @@ public class RatingService {
     }
 
 
+    /**
+     * check if an object exist by id
+     * @param id id
+     * @return boolean
+     * @throws NotExistingException e
+     */
     public boolean existsById(int id) throws NotExistingException {
 
         boolean isRatingExist = ratingRepository.existsById(id);
@@ -44,7 +54,12 @@ public class RatingService {
     }
 
 
-
+    /**
+     * call findById from repository
+     * @param id id
+     * @return rating object
+     * @throws NotExistingException e
+     */
     public Rating findById(int id) throws NotExistingException {
 
         log.debug("findById = " + id + " from Rating service called");
@@ -52,7 +67,11 @@ public class RatingService {
     }
 
 
-
+    /**
+     * call save method from repository
+     * @param rating rating
+     * @return rating object
+     */
     public Rating addRating(Rating rating) {
 
         ratingRepository.save(rating);
@@ -61,7 +80,12 @@ public class RatingService {
     }
 
 
-
+    /**
+     * update a rating calling save from repository
+     * @param id id
+     * @param rating rating
+     * @throws NotExistingException e
+     */
     public void updateRating(int id, Rating rating) throws NotExistingException {
 
         Rating ratingToModify = findById(id);
@@ -75,7 +99,11 @@ public class RatingService {
     }
 
 
-
+    /**
+     * delete an object by id calling delete from repository
+     * @param id id
+     * @throws NotExistingException e
+     */
     public void deleteById(int id) throws NotExistingException {
 
         Rating optionalRating = findById(id);
