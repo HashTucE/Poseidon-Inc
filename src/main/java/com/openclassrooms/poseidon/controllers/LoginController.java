@@ -80,7 +80,7 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        log.error("logout successfully");
+        log.info("logout successfully");
         return "redirect:/login";
     }
 
