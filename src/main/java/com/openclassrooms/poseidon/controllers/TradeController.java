@@ -6,6 +6,8 @@ import com.openclassrooms.poseidon.exceptions.EmptyListException;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.TradeService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,8 @@ public class TradeController {
         this.tradeService = tradeService;
     }
 
+    private static final Logger log = LogManager.getLogger(TradeController.class);
+
 
     /**
      * display the trade list
@@ -37,8 +41,10 @@ public class TradeController {
 
         try {
             model.addAttribute("tradeList", tradeService.findAll());
+            log.info("display trade list page");
         } catch (EmptyListException e) {
             model.addAttribute("alertMessage", e.getMessage());
+            log.info("display trade list page with empty list");
         }
         return "trade/list";
     }
@@ -52,6 +58,7 @@ public class TradeController {
     @GetMapping("/trade/add")
     public String addTradeForm(Trade trade) {
 
+        log.info("display add trade page");
         return "trade/add";
     }
 
@@ -68,8 +75,10 @@ public class TradeController {
 
         if (!result.hasErrors()) {
             tradeService.addTrade(trade);
+            log.info("validate trade");
             return "redirect:/trade/list";
         }
+        log.error("can't validate trade");
         return "trade/add";
     }
 
@@ -88,6 +97,7 @@ public class TradeController {
         Trade trade = tradeService.findById(id);
         model.addAttribute("trade", trade);
 
+        log.info("display update trade page");
         return "trade/update";
     }
 
@@ -107,8 +117,10 @@ public class TradeController {
 
         if (!result.hasErrors()) {
             tradeService.updateTrade(id, trade);
+            log.info("update trade");
             return "redirect:/trade/list";
         }
+        log.error("can't update trade");
         return "trade/update";
     }
 
@@ -124,6 +136,7 @@ public class TradeController {
     public String deleteTrade(@PathVariable("id") Integer id) throws NotExistingException {
 
         tradeService.deleteById(id);
+        log.info("delete trade");
         return "redirect:/trade/list";
     }
 }

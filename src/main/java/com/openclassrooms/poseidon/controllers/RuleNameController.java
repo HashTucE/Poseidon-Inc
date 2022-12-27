@@ -6,6 +6,8 @@ import com.openclassrooms.poseidon.exceptions.EmptyListException;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.RuleNameService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,8 @@ public class RuleNameController {
         this.ruleNameService = ruleNameService;
     }
 
+    private static final Logger log = LogManager.getLogger(RuleNameController.class);
+
 
     /**
      * display the ruleName list
@@ -37,8 +41,10 @@ public class RuleNameController {
 
         try {
             model.addAttribute("ruleList", ruleNameService.findAll());
+            log.info("display ruleName list page");
         } catch (EmptyListException e) {
             model.addAttribute("alertMessage", e.getMessage());
+            log.info("display ruleName list page with empty list");
         }
         return "ruleName/list";
     }
@@ -52,6 +58,7 @@ public class RuleNameController {
     @GetMapping("/ruleName/add")
     public String addRuleForm(RuleName rule) {
 
+        log.info("display add ruleName page");
         return "ruleName/add";
     }
 
@@ -68,8 +75,10 @@ public class RuleNameController {
 
         if (!result.hasErrors()) {
             ruleNameService.addRuleName(ruleName);
+            log.info("validate ruleName");
             return "redirect:/ruleName/list";
         }
+        log.error("can't validate ruleName");
         return "ruleName/add";
     }
 
@@ -88,6 +97,7 @@ public class RuleNameController {
         RuleName ruleName = ruleNameService.findById(id);
         model.addAttribute("ruleName", ruleName);
 
+        log.info("display update ruleName page");
         return "ruleName/update";
     }
 
@@ -106,8 +116,10 @@ public class RuleNameController {
                              BindingResult result) throws NotExistingException {
         if (!result.hasErrors()) {
             ruleNameService.updateRuleName(id, ruleName);
+            log.info("update ruleName");
             return "redirect:/ruleName/list";
         }
+        log.error("can't update ruleName");
         return "ruleName/update";
     }
 
@@ -123,6 +135,7 @@ public class RuleNameController {
     public String deleteRuleName(@PathVariable("id") Integer id) throws NotExistingException {
 
         ruleNameService.deleteById(id);
+        log.info("delete ruleName");
         return "redirect:/ruleName/list";
     }
 }

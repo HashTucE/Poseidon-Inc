@@ -5,8 +5,9 @@ import com.openclassrooms.poseidon.domain.User;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.UserService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static final Logger log = LogManager.getLogger(UserController.class);
+
 
     /**
      * display the user list
@@ -32,6 +35,7 @@ public class UserController {
     public String home(Model model)
     {
         model.addAttribute("users", userService.findAll());
+        log.info("display user list page");
         return "user/list";
     }
 
@@ -42,6 +46,8 @@ public class UserController {
      */
     @GetMapping("/user/add")
     public String addUser(User user) {
+
+        log.info("display add user page");
         return "user/add";
     }
 
@@ -57,8 +63,10 @@ public class UserController {
 
         if (!result.hasErrors()) {
             userService.addUser(user);
+            log.info("validate user");
             return "redirect:/user/list";
         }
+        log.error("can't validate user");
         return "user/add";
     }
 
@@ -76,6 +84,7 @@ public class UserController {
         user.setPassword("");
         model.addAttribute("user", user);
 
+        log.info("display update user page");
         return "user/update";
     }
 
@@ -94,8 +103,10 @@ public class UserController {
 
         if (!result.hasErrors()) {
             userService.updateUser(id, user);
+            log.info("update user");
             return "redirect:/user/list";
         }
+        log.error("can't update user");
         return "user/update";
     }
 
@@ -110,6 +121,7 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Integer id) throws NotExistingException {
 
         userService.deleteById(id);
+        log.info("delete user");
         return "redirect:/user/list";
     }
 }

@@ -6,6 +6,8 @@ import com.openclassrooms.poseidon.exceptions.EmptyListException;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.BidListService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,8 @@ public class BidListController {
         this.bidListService = bidListService;
     }
 
+    private static final Logger log = LogManager.getLogger(BidListController.class);
+
 
     /**
      * display the bidList
@@ -37,8 +41,10 @@ public class BidListController {
 
         try {
             model.addAttribute("bidList", bidListService.findAll());
+            log.info("display bid list page");
         } catch (EmptyListException e) {
             model.addAttribute("alertMessage", e.getMessage());
+            log.info("display bid list page with empty list");
         }
         return "bidList/list";
     }
@@ -52,6 +58,7 @@ public class BidListController {
     @GetMapping("/bidList/add")
     public String addBidForm(BidList bid) {
 
+        log.info("display add bid page");
         return "bidList/add";
     }
 
@@ -67,8 +74,10 @@ public class BidListController {
 
         if (!result.hasErrors()) {
             bidListService.addBid(bid);
+            log.info("validate bid");
             return "redirect:/bidList/list";
         }
+        log.error("can't validate bid");
         return "bidList/add";
     }
 
@@ -86,6 +95,7 @@ public class BidListController {
         BidList bid = bidListService.findById(id);
         model.addAttribute("bid", bid);
 
+        log.info("display update bid page");
         return "bidList/update";
     }
 
@@ -104,8 +114,10 @@ public class BidListController {
 
         if (!result.hasErrors()) {
             bidListService.updateBid(id, bid);
+            log.info("update bid");
         return "redirect:/bidList/list";
         }
+        log.error("can't update bid");
         return "bidList/update";
     }
 
@@ -120,6 +132,7 @@ public class BidListController {
     public String deleteBid(@PathVariable("id") Integer id) throws NotExistingException {
 
         bidListService.deleteById(id);
+        log.info("delete bid");
         return "redirect:/bidList/list";
     }
 }

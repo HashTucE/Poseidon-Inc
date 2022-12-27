@@ -6,6 +6,8 @@ import com.openclassrooms.poseidon.exceptions.EmptyListException;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.RatingService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,8 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
+    private static final Logger log = LogManager.getLogger(RatingController.class);
+
 
     /**
      * display the rating list
@@ -37,8 +41,10 @@ public class RatingController {
 
         try {
             model.addAttribute("ratingList", ratingService.findAll());
+            log.info("display rating list page");
         } catch (EmptyListException e) {
             model.addAttribute("alertMessage", e.getMessage());
+            log.info("display rating list page with empty list");
         }
         return "rating/list";
     }
@@ -52,6 +58,7 @@ public class RatingController {
     @GetMapping("/rating/add")
     public String addRatingForm(Rating rating) {
 
+        log.info("display add rating page");
         return "rating/add";
     }
 
@@ -68,8 +75,10 @@ public class RatingController {
 
         if (!result.hasErrors()) {
             ratingService.addRating(rating);
+            log.info("validate rating");
             return "redirect:/rating/list";
         }
+        log.error("can't validate rating");
         return "rating/add";
     }
 
@@ -88,6 +97,7 @@ public class RatingController {
         Rating rating = ratingService.findById(id);
         model.addAttribute("rating", rating);
 
+        log.info("display update rating page");
         return "rating/update";
     }
 
@@ -107,8 +117,10 @@ public class RatingController {
 
         if (!result.hasErrors()) {
             ratingService.updateRating(id, rating);
+            log.info("update rating");
             return "redirect:/rating/list";
         }
+        log.error("can't update rating");
         return "rating/update";
     }
 
@@ -124,6 +136,7 @@ public class RatingController {
     public String deleteRating(@PathVariable("id") Integer id) throws NotExistingException {
 
         ratingService.deleteById(id);
+        log.info("delete rating");
         return "redirect:/rating/list";
     }
 }

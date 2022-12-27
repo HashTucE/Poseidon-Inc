@@ -6,6 +6,8 @@ import com.openclassrooms.poseidon.exceptions.EmptyListException;
 import com.openclassrooms.poseidon.exceptions.NotExistingException;
 import com.openclassrooms.poseidon.services.CurveService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,8 @@ public class CurveController {
         this.curveService = curveService;
     }
 
+    private static final Logger log = LogManager.getLogger(CurveController.class);
+
 
     /**
      * display the curvePoint list
@@ -37,8 +41,10 @@ public class CurveController {
 
         try {
             model.addAttribute("curveList", curveService.findAll());
+            log.info("display curve list page");
         } catch (EmptyListException e) {
             model.addAttribute("alertMessage", e.getMessage());
+            log.info("display curve list page with empty list");
         }
         return "curvePoint/list";
     }
@@ -52,6 +58,7 @@ public class CurveController {
     @GetMapping("/curvePoint/add")
     public String addCurveForm(CurvePoint bid) {
 
+        log.info("display add curve page");
         return "curvePoint/add";
     }
 
@@ -68,8 +75,10 @@ public class CurveController {
 
         if (!result.hasErrors()) {
             curveService.addCurvePoint(curvePoint);
+            log.info("validate curve");
             return "redirect:/curvePoint/list";
         }
+        log.error("can't validate curve");
         return "curvePoint/add";
     }
 
@@ -88,6 +97,7 @@ public class CurveController {
         CurvePoint curvePoint = curveService.findById(id);
         model.addAttribute("curvePoint", curvePoint);
 
+        log.info("display update curve page");
         return "curvePoint/update";
     }
 
@@ -107,8 +117,10 @@ public class CurveController {
 
         if (!result.hasErrors()) {
             curveService.updateCurvePoint(id, curvePoint);
+            log.info("update curve");
             return "redirect:/curvePoint/list";
         }
+        log.error("can't update curve");
         return "curvePoint/update";
     }
 
@@ -123,6 +135,7 @@ public class CurveController {
     public String deleteCurve(@PathVariable("id") Integer id) throws NotExistingException {
 
         curveService.deleteById(id);
+        log.info("delete curve");
         return "redirect:/curvePoint/list";
     }
 }

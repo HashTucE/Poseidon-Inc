@@ -65,6 +65,7 @@ public class LoginController {
         String errorMessage= "You are not authorized for the requested data.";
         mav.addObject("errorMsg", errorMessage);
         mav.setViewName("403");
+        log.info("returning unauthorized 403 view");
         return mav;
     }
 
@@ -79,6 +80,7 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+        log.error("logout successfully");
         return "redirect:/login";
     }
 
