@@ -3,9 +3,7 @@ package com.openclassrooms.poseidon.domain;
 
 import com.openclassrooms.poseidon.configuration.Generated;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -27,9 +25,8 @@ public class BidList {
     @NotBlank(message = "Type is mandatory")
     private String type;
 
-    @NotNull(message = "Quantity is mandatory")
-    @Positive
-    @Column(name="bidQuantity")
+    @Min(value = 0L, message = "Must be a positive number")
+    @NotNull(message = "Number must not be null")
     private Double bidQuantity;
 
     @Positive

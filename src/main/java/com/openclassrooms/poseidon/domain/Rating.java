@@ -2,6 +2,7 @@ package com.openclassrooms.poseidon.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,7 +26,8 @@ public class Rating {
     @Column(name="fitchRating")
     private String fitchRating;
 
-    @NotNull(message = "OrderNumber is mandatory")
+    @Min(value = 0L, message = "Must be a positive number")
+    @NotNull(message = "Number must not be null")
     @Column(name="orderNumber")
     private Integer orderNumber;
 

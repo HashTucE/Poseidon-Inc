@@ -3,6 +3,7 @@ package com.openclassrooms.poseidon.domain;
 
 import com.openclassrooms.poseidon.configuration.Generated;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,7 +20,8 @@ public class CurvePoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "must not be null")
+    @Min(value = 0L, message = "Must be a positive number")
+    @NotNull(message = "Number must not be null")
     @Column(name="curveId")
     private Integer curveId;
 
@@ -27,10 +29,12 @@ public class CurvePoint {
     @Column(name="asOfDate")
     private Timestamp asOfDate;
 
-    @NotNull(message = "must not be null")
+    @Min(value = 0L, message = "Must be a positive number")
+    @NotNull(message = "Number must not be null")
     private Double term;
 
-    @NotNull(message = "must not be null")
+    @Min(value = 0L, message = "Must be a positive number")
+    @NotNull(message = "Number must not be null")
     private Double value;
 
     @CreationTimestamp

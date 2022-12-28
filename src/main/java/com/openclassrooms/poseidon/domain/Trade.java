@@ -5,6 +5,7 @@ package com.openclassrooms.poseidon.domain;
 
 import com.openclassrooms.poseidon.configuration.Generated;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,7 +28,8 @@ public class Trade {
     @NotBlank(message = "Type is mandatory")
     private String type;
 
-    @NotNull(message = "BuyQuantity is mandatory")
+    @Min(value = 0L, message = "Must be a positive number")
+    @NotNull(message = "Number must not be null")
     @Column(name="buyQuantity")
     private Double buyQuantity;
 
