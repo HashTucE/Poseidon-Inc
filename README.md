@@ -45,6 +45,26 @@ Can be use with a browser or via software like Postman
   - Then to sign in with any of these 2 first account, use the password `&&`.
   - I recommend to use first the account of `admin` because his role give him access to user management.
 
+# Prepare OAuth authentication
+
+When starting the application you will have the possibility to connect via a button `Login with GitHub`.
+For this to work you must first obtain a client ID and a client secret in your GitHub account :
+  - Go to `Settings`
+  - Then at the bottom `Developer settings`
+  - Select on the left `OAuth Apps`
+  - Click on the `New Oauth App` button on the right
+  - finally filled in the fields like this before validating :
+
+<p align="center">
+  <img src=https://user-images.githubusercontent.com/95872501/227555867-a2e11310-46a1-458b-8fc0-7df8707a9f8b.png>
+</p>
+
+Once it's done get the `Client ID` and the `Client Secret` to add them in the `application.properties` file :
+
+<p align="center">
+  <img src=https://user-images.githubusercontent.com/95872501/227556775-c155aeec-dda1-4e34-9c13-78619b854413.png>
+</p>
+
 # Run the Application
 
 - The datasource is set to `src/main/resources/application.properties` : 
