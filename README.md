@@ -16,8 +16,6 @@ Financial API WEB with the following features :
 - Update objects with mandatory fields
 - Delete Objects
 
-Can be use with a browser or via software like Postman
-
 
 # Prerequisites
 - Java 19
@@ -79,6 +77,16 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.username=ro
 - And finally open your browser to access to [Poseidon](http://localhost:8080/)
 - Then you can create a new account or use an existing from data script
 - Stop the application in the command prompt with : `CTRL + C`
+
+
+# Send request to the API
+
+1. Install [Postman](https://www.postman.com/downloads/)
+2. Save this json [collection](https://gist.githubusercontent.com/HashTucE/4ac302bf9ff9b7b5a06a8106d02400d0/raw/c9c2ef6b06622df8a92bfa5263a295dff949f88c/P7.json)
+4. Import this HTTP requests collection into `Postman`
+
+Now you should be able to access to all requests to create, read, update or delete objects.
+
 
 # UML Diagram
 ![uml](https://user-images.githubusercontent.com/95872501/209088546-ebcaa663-b75a-46ae-bece-fe31cd995b37.png)
