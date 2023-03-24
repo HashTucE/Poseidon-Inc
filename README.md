@@ -29,9 +29,9 @@ Can be use with a browser or via software like Postman
 - Install [MySQL](https://dev.mysql.com/downloads/mysql/)
 
 - Open a command prompt to start MySQL server :
-  - Enter this command replacing the `???` by your username : 
+  - Enter this command to be connected as `root` : 
     ```
-    mysql -u ??? -p
+    mysql -u root -p
     ```
   - Type your password and press `enter` to start the server.
   
@@ -72,12 +72,12 @@ Once it's done get the `Client ID` and the `Client Secret` to add them in the `a
 spring.datasource.url=jdbc:mysql://localhost:3306/paymybuddy?serverTimezone=UTC
 ```
 
-- Open a command prompt, once located to the root of the project, run the following command replacing `???` by your username and your password of datasource : 
+- Open a command prompt, once located to the root of the project, run the following command modifying if necessary your credentials : 
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.username=??? --spring.datasource.password=???"
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.username=root --spring.datasource.password=pass"
 ```
-- And finally open your browser to access to this URL : http://localhost:8080/
-- Then you can create a new account or use an existing from data script, ENJOY !
+- And finally open your browser to access to [Poseidon](http://localhost:8080/)
+- Then you can create a new account or use an existing from data script
 - Stop the application in the command prompt with : `CTRL + C`
 
 # UML Diagram
