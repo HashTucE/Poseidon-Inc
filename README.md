@@ -43,7 +43,7 @@ Financial API WEB with the following features :
   - Then to sign in with any of these 2 first account, use the password `&&`.
   - I recommend to use first the account of `admin` because his role give him access to user management.
 
-# Prepare OAuth authentication
+# Prepare GitHub authentication
 
 When starting the application you will have the possibility to connect via a button `Login with GitHub`.
 For this to work you must first obtain a client ID and a client secret in your GitHub account :
